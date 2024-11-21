@@ -2,6 +2,7 @@ package dev.ngdangkietswe.swetaskservice.grpc.server;
 
 import com.google.rpc.Code;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.Error;
+import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.Pageable;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
 import dev.ngdangkietswe.sweprotobufshared.proto.common.IGrpcServer;
@@ -54,5 +55,10 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
                                 .build())
                         .build()
         );
+    }
+
+    @Override
+    public void getTask(IdReq request, StreamObserver<Task> responseObserver) {
+        // TODO
     }
 }

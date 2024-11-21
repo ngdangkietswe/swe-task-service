@@ -1,5 +1,6 @@
 package dev.ngdangkietswe.swetaskservice.grpc.service;
 
+import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.Pageable;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
 import dev.ngdangkietswe.sweprotobufshared.task.protobuf.Status;
@@ -51,5 +52,11 @@ public class TaskGrpcServiceImpl implements ITaskGrpcService {
                         ))
                         .build())
                 .build();
+    }
+
+    @Override
+    public Task getTask(IdReq request) {
+        // TODO
+        return null;
     }
 }
