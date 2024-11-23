@@ -6,6 +6,7 @@ import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.Pageable;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
 import dev.ngdangkietswe.sweprotobufshared.proto.common.IGrpcServer;
+import dev.ngdangkietswe.sweprotobufshared.proto.security.SweGrpcServerInterceptor;
 import dev.ngdangkietswe.sweprotobufshared.task.protobuf.Task;
 import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskResp;
 import dev.ngdangkietswe.sweprotobufshared.task.service.TaskServiceGrpc;
@@ -19,7 +20,7 @@ import org.lognet.springboot.grpc.GRpcService;
  * @since 11/21/2024
  */
 
-@GRpcService
+@GRpcService(interceptors = SweGrpcServerInterceptor.class)
 @RequiredArgsConstructor
 public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
 

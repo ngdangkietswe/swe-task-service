@@ -3,9 +3,11 @@ package dev.ngdangkietswe.swetaskservice.grpc.service;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.Pageable;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
+import dev.ngdangkietswe.sweprotobufshared.proto.common.GrpcUtil;
 import dev.ngdangkietswe.sweprotobufshared.task.protobuf.Status;
 import dev.ngdangkietswe.sweprotobufshared.task.protobuf.Task;
 import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskResp;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,13 @@ import java.util.UUID;
  */
 
 @Service
+@Log4j2
 public class TaskGrpcServiceImpl implements ITaskGrpcService {
 
     @Override
     public UpsertResp upsertTask(Task request) {
         return UpsertResp.newBuilder()
+                .setSuccess(true)
                 .setData(UpsertResp.Data.newBuilder()
                         .setId(StringUtils.defaultIfEmpty(request.getId(), UUID.randomUUID().toString()))
                         .build())
@@ -31,7 +35,10 @@ public class TaskGrpcServiceImpl implements ITaskGrpcService {
 
     @Override
     public ListTaskResp listTask(Pageable request) {
+        var principal = GrpcUtil.getGrpcPrincipal();
+        log.info("Method listTask is called by user: {} with id: {}", principal.getUsername(), principal.getUserId());
         return ListTaskResp.newBuilder()
+                .setSuccess(true)
                 .setData(ListTaskResp.Data.newBuilder()
                         .addAllTasks(List.of(
                                 Task.newBuilder()
