@@ -31,6 +31,12 @@
         <tag/>
         <url/>
     </scm>
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ngdangkietswe/swe-protobuf-shared</url>
+        </repository>
+    </repositories>
     <properties>
         <java.version>17</java.version>
     </properties>
