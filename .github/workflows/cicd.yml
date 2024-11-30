@@ -27,6 +27,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2
 
+      - name: Generate Java Code
+        run: mvn -T 1C clean install -Dmaven.test.skip -DskipTests
+
   docker:
     name: Docker Build and Push
     needs: build-and-test
