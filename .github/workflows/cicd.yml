@@ -46,11 +46,22 @@ jobs:
       - name: Generate Java Code
         run: mvn -T 1C clean install -Dmaven.test.skip -DskipTests
 
+      - name: Upload JAR to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: swe-task-service-jar
+          path: target/swe-task-service.jar
+
   docker:
     name: Docker Build and Push
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
+      - name: Download JAR from Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: swe-task-service-jar
+
       - name: Checkout Code
         uses: actions/checkout@v3
 
