@@ -1,0 +1,5 @@
+app:
+  server:
+    port: ${SERVER_PORT}
+  grpc:
+    port: ${GRPC_PORT}

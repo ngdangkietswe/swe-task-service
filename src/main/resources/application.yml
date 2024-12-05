@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: swe-task-service
+  profiles:
+    active: @activatedProperties@
+
+server:
+  port: ${app.server.port}
+
+grpc:
+  port: ${app.grpc.port}
+  netty-server:
+    max-inbound-message-size: 12MB
+    max-inbound-metadata-size: 12MB

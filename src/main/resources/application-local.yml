@@ -1,0 +1,5 @@
+app:
+  server:
+    port: 7001
+  grpc:
+    port: 7010
