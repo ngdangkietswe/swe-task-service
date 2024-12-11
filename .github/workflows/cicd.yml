@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Calculate build start time
         id: build_start_time
-        run: echo "start_time=$(date +%s)" >> $GITHUB_ENV
+        run: echo "start_time=$(date +%s)" >> $GITHUB_OUTPUT
 
       - name: Check out repository
         uses: actions/checkout@v2
@@ -152,7 +152,9 @@ jobs:
         run: |
           START_TIME=${{ needs.build-and-push.outputs.START_TIME }}
           END_TIME=$(date +%s)
-          echo "duration=$((END_TIME - START_TIME))" >> $GITHUB_OUTPUT
+          DURATION=$((END_TIME - START_TIME))
+          echo "duration=$DURATION" >> $GITHUB_OUTPUT
+          echo "✅ Build took $DURATION seconds."
 
   push-notification-to-slack:
     name: Slack Notification
