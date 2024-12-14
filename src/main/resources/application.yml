@@ -3,7 +3,30 @@ spring:
     name: swe-task-service
   profiles:
     active: @activatedProperties@
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${app.database.host}:${app.database.port}/${app.database.name}?useEncoding=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useLegacyDatetimeCode=false&serverTimezone=Asia/Ho_Chi_Minh&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${app.database.username}
+    password: ${app.database.password}
+    hikari:
+      schema: ${app.database.schema}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: ${app.config.timezone}
+        format_sql: true
+    show-sql: true
 
+  kafka:
+    bootstrap-servers: ${app.kafka.host}:${app.kafka.port}
+    consumer:
+      group-id: swe-task-service
+      auto-offset-reset: earliest
+      enable-auto-commit: false
 server:
   port: ${app.server.port}
 

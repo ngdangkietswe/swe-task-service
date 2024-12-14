@@ -3,3 +3,15 @@ app:
     port: 7001
   grpc:
     port: 7010
+  database:
+    host: localhost
+    port: 5432
+    name: SweTask
+    schema: swetask
+    username: postgres
+    password: 123456
+  kafka:
+    host: localhost
+    port: 9092
+  config:
+    timezone: Asia/Ho_Chi_Minh

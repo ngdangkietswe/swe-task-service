@@ -39,6 +39,7 @@
     </repositories>
     <properties>
         <java.version>17</java.version>
+        <querydsl.version>5.0.0</querydsl.version>
     </properties>
 
     <dependencies>
@@ -63,8 +64,44 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${querydsl.version}</version>
+            <classifier>jakarta</classifier>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <classifier>jakarta</classifier>
+            <version>${querydsl.version}</version>
+        </dependency>
+        <dependency>
             <groupId>dev.ngdangkietswe</groupId>
             <artifactId>swe-protobuf-shared</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.ngdangkietswe</groupId>
+            <artifactId>swe-java-common-shared</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
