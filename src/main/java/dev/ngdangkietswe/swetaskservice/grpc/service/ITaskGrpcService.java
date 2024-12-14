@@ -1,10 +1,13 @@
 package dev.ngdangkietswe.swetaskservice.grpc.service;
 
+import dev.ngdangkietswe.sweprotobufshared.common.protobuf.EmptyResp;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
-import dev.ngdangkietswe.sweprotobufshared.common.protobuf.Pageable;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
-import dev.ngdangkietswe.sweprotobufshared.task.protobuf.Task;
+import dev.ngdangkietswe.sweprotobufshared.proto.domain.SweGrpcPrincipal;
+import dev.ngdangkietswe.sweprotobufshared.task.service.GetTaskResp;
+import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskReq;
 import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskResp;
+import dev.ngdangkietswe.sweprotobufshared.task.service.UpsertTaskReq;
 
 /**
  * @author ngdangkietswe
@@ -13,9 +16,19 @@ import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskResp;
 
 public interface ITaskGrpcService {
 
-    UpsertResp upsertTask(Task request);
+    UpsertResp upsertTask(UpsertTaskReq request, SweGrpcPrincipal principal);
 
-    ListTaskResp listTask(Pageable request);
+    ListTaskResp listTask(ListTaskReq request, SweGrpcPrincipal principal);
 
-    Task getTask(IdReq request);
+    GetTaskResp getTask(IdReq request, SweGrpcPrincipal principal);
+
+    EmptyResp deleteTask(IdReq request, SweGrpcPrincipal principal);
+
+    EmptyResp markTaskAsInProgress(IdReq request, SweGrpcPrincipal principal);
+
+    EmptyResp markTaskAsInReview(IdReq request, SweGrpcPrincipal principal);
+
+    EmptyResp markTaskAsDone(IdReq request, SweGrpcPrincipal principal);
+
+    EmptyResp markTaskAsCanceled(IdReq request, SweGrpcPrincipal principal);
 }

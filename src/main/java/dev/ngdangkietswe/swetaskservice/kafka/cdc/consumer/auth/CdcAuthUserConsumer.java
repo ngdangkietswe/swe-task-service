@@ -2,7 +2,7 @@ package dev.ngdangkietswe.swetaskservice.kafka.cdc.consumer.auth;
 
 import dev.ngdangkietswe.swejavacommonshared.constants.KafkaConstant;
 import dev.ngdangkietswe.swetaskservice.data.entity.CdcAuthUserEntity;
-import dev.ngdangkietswe.swetaskservice.data.repository.CdcAuthUserRepository;
+import dev.ngdangkietswe.swetaskservice.data.repository.jpa.CdcAuthUserRepository;
 import dev.ngdangkietswe.swetaskservice.kafka.cdc.consumer.CdcBaseConsumer;
 import dev.ngdangkietswe.swetaskservice.kafka.cdc.payload.auth.CdcAuthUserPayload;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

@@ -1,4 +1,4 @@
-package dev.ngdangkietswe.swetaskservice.data.repository;
+package dev.ngdangkietswe.swetaskservice.data.repository.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;

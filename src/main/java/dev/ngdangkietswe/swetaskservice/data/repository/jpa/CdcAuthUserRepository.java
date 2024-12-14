@@ -1,4 +1,4 @@
-package dev.ngdangkietswe.swetaskservice.data.repository;
+package dev.ngdangkietswe.swetaskservice.data.repository.jpa;
 
 import dev.ngdangkietswe.swetaskservice.data.entity.CdcAuthUserEntity;
 import org.springframework.stereotype.Repository;

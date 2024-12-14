@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dev.ngdangkietswe.swejavacommonshared.debezium.CdcEvent;
 import dev.ngdangkietswe.swejavacommonshared.debezium.CdcEventConsumer;
-import dev.ngdangkietswe.swetaskservice.data.repository.IBaseRepository;
+import dev.ngdangkietswe.swetaskservice.data.repository.jpa.IBaseRepository;
 import dev.ngdangkietswe.swetaskservice.kafka.cdc.payload.CdcBasePayload;
 import lombok.extern.log4j.Log4j2;
 
