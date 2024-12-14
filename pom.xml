@@ -33,11 +33,11 @@
     </scm>
     <repositories>
         <repository>
-            <id>github</id>
+            <id>github-protobuf-shared</id>
             <url>https://maven.pkg.github.com/ngdangkietswe/swe-protobuf-shared</url>
         </repository>
         <repository>
-            <id>github</id>
+            <id>github-java-common-shared</id>
             <url>https://maven.pkg.github.com/ngdangkietswe/swe-java-common-shared</url>
         </repository>
     </repositories>
