@@ -6,10 +6,11 @@ import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
 import dev.ngdangkietswe.sweprotobufshared.proto.common.GrpcUtil;
 import dev.ngdangkietswe.sweprotobufshared.proto.domain.SweGrpcPrincipal;
 import dev.ngdangkietswe.sweprotobufshared.proto.exception.GrpcNotFoundException;
-import dev.ngdangkietswe.sweprotobufshared.task.service.GetTaskResp;
-import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskReq;
-import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskResp;
-import dev.ngdangkietswe.sweprotobufshared.task.service.UpsertTaskReq;
+import dev.ngdangkietswe.sweprotobufshared.task.GetTaskResp;
+import dev.ngdangkietswe.sweprotobufshared.task.ListTaskReq;
+import dev.ngdangkietswe.sweprotobufshared.task.ListTaskResp;
+import dev.ngdangkietswe.sweprotobufshared.task.UpsertTaskReq;
+import dev.ngdangkietswe.sweprotobufshared.task.protobuf.Status;
 import dev.ngdangkietswe.swetaskservice.data.entity.CdcAuthUserEntity;
 import dev.ngdangkietswe.swetaskservice.data.entity.TaskEntity;
 import dev.ngdangkietswe.swetaskservice.data.repository.dsl.TaskDslRepository;
@@ -43,8 +44,6 @@ public class TaskGrpcServiceImpl implements ITaskGrpcService {
 
     @Override
     public UpsertResp upsertTask(UpsertTaskReq request, SweGrpcPrincipal principal) {
-        var resp = UpsertResp.newBuilder();
-
         var userId = principal.getUserId();
         TaskEntity task;
 
@@ -76,7 +75,7 @@ public class TaskGrpcServiceImpl implements ITaskGrpcService {
 
         taskRepository.save(task);
 
-        return resp
+        return UpsertResp.newBuilder()
                 .setSuccess(true)
                 .setData(UpsertResp.Data.newBuilder()
                         .setId(task.getId().toString())
@@ -99,31 +98,61 @@ public class TaskGrpcServiceImpl implements ITaskGrpcService {
 
     @Override
     public GetTaskResp getTask(IdReq request, SweGrpcPrincipal principal) {
-        return GetTaskResp.newBuilder().build();
+        var task = taskDslRepository.findById(UUID.fromString(request.getId()))
+                .orElseThrow(() -> new GrpcNotFoundException(TaskEntity.class, "id", request.getId()));
+
+        return GetTaskResp.newBuilder().setSuccess(true).setTask(taskGrpcMapper.toGrpcMessage(task)).build();
     }
 
     @Override
     public EmptyResp deleteTask(IdReq request, SweGrpcPrincipal principal) {
-        return null;
+        taskRepository.findById(UUID.fromString(request.getId()))
+                .ifPresentOrElse(
+                        task -> {
+                            task.preDelete(principal.getUserId());
+                            taskRepository.save(task);
+                        },
+                        () -> {
+                            throw new GrpcNotFoundException(TaskEntity.class, "id", request.getId());
+                        });
+
+        return EmptyResp.newBuilder().setSuccess(true).build();
+    }
+
+    private void markTaskAsXStatus(IdReq request, int status, SweGrpcPrincipal principal) {
+        taskRepository.findById(UUID.fromString(request.getId()))
+                .ifPresentOrElse(
+                        task -> {
+                            task.setStatus(status);
+                            task.preUpdate(principal.getUserId());
+                            taskRepository.save(task);
+                        },
+                        () -> {
+                            throw new GrpcNotFoundException(TaskEntity.class, "id", request.getId());
+                        });
     }
 
     @Override
     public EmptyResp markTaskAsInProgress(IdReq request, SweGrpcPrincipal principal) {
-        return null;
+        markTaskAsXStatus(request, Status.STATUS_IN_PROGRESS_VALUE, principal);
+        return EmptyResp.newBuilder().setSuccess(true).build();
     }
 
     @Override
     public EmptyResp markTaskAsInReview(IdReq request, SweGrpcPrincipal principal) {
-        return null;
+        markTaskAsXStatus(request, Status.STATUS_IN_REVIEW_VALUE, principal);
+        return EmptyResp.newBuilder().setSuccess(true).build();
     }
 
     @Override
     public EmptyResp markTaskAsDone(IdReq request, SweGrpcPrincipal principal) {
-        return null;
+        markTaskAsXStatus(request, Status.STATUS_DONE_VALUE, principal);
+        return EmptyResp.newBuilder().setSuccess(true).build();
     }
 
     @Override
     public EmptyResp markTaskAsCanceled(IdReq request, SweGrpcPrincipal principal) {
-        return null;
+        markTaskAsXStatus(request, Status.STATUS_CANCELED_VALUE, principal);
+        return EmptyResp.newBuilder().setSuccess(true).build();
     }
 }

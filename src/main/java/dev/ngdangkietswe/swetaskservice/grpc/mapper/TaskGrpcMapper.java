@@ -26,9 +26,9 @@ public class TaskGrpcMapper extends GrpcMapper<TaskProjection, Task, Task.Builde
     @Override
     public Task.Builder toGrpcBuilder(TaskProjection from) {
         var task = from.getTask();
-        var createdBy = from.getCreatedBy();
-        var modifiedBy = from.getModifiedBy();
-        var deletedBy = from.getDeletedBy();
+        var createdBy = from.getAudit().getCreatedBy();
+        var modifiedBy = from.getAudit().getModifiedBy();
+        var deletedBy = from.getAudit().getDeletedBy();
 
         var builder = Task.newBuilder()
                 .setId(task.getId().toString())

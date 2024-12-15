@@ -3,6 +3,7 @@ package dev.ngdangkietswe.swetaskservice.data.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Entity(name = "cdc_auth_users")
+@Entity
+@Table(name = "cdc_auth_users")
 public class CdcAuthUserEntity implements Serializable {
 
     @Id

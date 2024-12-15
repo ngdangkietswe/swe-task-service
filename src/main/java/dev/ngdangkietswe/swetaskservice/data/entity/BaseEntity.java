@@ -77,6 +77,7 @@ public class BaseEntity implements Serializable {
     }
 
     public void preDelete(UUID deletedBy) {
+        this.isDeleted = true;
         this.deletedBy = deletedBy;
     }
 }

@@ -1,7 +1,9 @@
 package dev.ngdangkietswe.swetaskservice.data.projection;
 
 import dev.ngdangkietswe.swetaskservice.data.entity.CdcAuthUserEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -11,6 +13,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuditProjection {
 
     private CdcAuthUserEntity createdBy;

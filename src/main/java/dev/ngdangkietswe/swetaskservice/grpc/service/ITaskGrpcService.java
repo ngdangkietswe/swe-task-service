@@ -4,10 +4,10 @@ import dev.ngdangkietswe.sweprotobufshared.common.protobuf.EmptyResp;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
 import dev.ngdangkietswe.sweprotobufshared.proto.domain.SweGrpcPrincipal;
-import dev.ngdangkietswe.sweprotobufshared.task.service.GetTaskResp;
-import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskReq;
-import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskResp;
-import dev.ngdangkietswe.sweprotobufshared.task.service.UpsertTaskReq;
+import dev.ngdangkietswe.sweprotobufshared.task.GetTaskResp;
+import dev.ngdangkietswe.sweprotobufshared.task.ListTaskReq;
+import dev.ngdangkietswe.sweprotobufshared.task.ListTaskResp;
+import dev.ngdangkietswe.sweprotobufshared.task.UpsertTaskReq;
 
 /**
  * @author ngdangkietswe

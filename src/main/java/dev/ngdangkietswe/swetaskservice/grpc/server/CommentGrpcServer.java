@@ -1,15 +1,15 @@
 package dev.ngdangkietswe.swetaskservice.grpc.server;
 
-import dev.ngdangkietswe.sweprotobufshared.comment.service.CommentServiceGrpc;
-import dev.ngdangkietswe.sweprotobufshared.comment.service.ListCommentReq;
-import dev.ngdangkietswe.sweprotobufshared.comment.service.ListCommentResp;
-import dev.ngdangkietswe.sweprotobufshared.comment.service.UpsertCommentReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.EmptyResp;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
 import dev.ngdangkietswe.sweprotobufshared.proto.common.GrpcUtil;
 import dev.ngdangkietswe.sweprotobufshared.proto.common.IGrpcServer;
 import dev.ngdangkietswe.sweprotobufshared.proto.security.SweGrpcServerInterceptor;
+import dev.ngdangkietswe.sweprotobufshared.task.CommentServiceGrpc;
+import dev.ngdangkietswe.sweprotobufshared.task.ListCommentReq;
+import dev.ngdangkietswe.sweprotobufshared.task.ListCommentResp;
+import dev.ngdangkietswe.sweprotobufshared.task.UpsertCommentReq;
 import dev.ngdangkietswe.swetaskservice.grpc.service.ICommentGrpcService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;

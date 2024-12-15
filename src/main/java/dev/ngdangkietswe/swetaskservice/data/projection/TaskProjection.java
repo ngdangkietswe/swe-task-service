@@ -1,7 +1,9 @@
 package dev.ngdangkietswe.swetaskservice.data.projection;
 
 import dev.ngdangkietswe.swetaskservice.data.entity.TaskEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -11,7 +13,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TaskProjection extends AuditProjection {
+@NoArgsConstructor
+@AllArgsConstructor
+public class TaskProjection {
 
     private TaskEntity task;
+    private AuditProjection audit;
 }

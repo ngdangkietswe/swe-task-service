@@ -6,6 +6,8 @@ import dev.ngdangkietswe.swetaskservice.data.entity.CdcAuthUserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * @author ngdangkietswe
  * @since 12/15/2024
@@ -27,7 +29,7 @@ public class AuditGrpcMapper {
                 .setUpdatedAt(entity.getUpdatedAt().toString())
                 .setUpdatedBy(userGrpcMapper.toGrpcBuilder(updatedBy));
 
-        if (deletedBy != null) {
+        if (Objects.nonNull(deletedBy)) {
             builder.setIsDeleted(true).setDeletedBy(userGrpcMapper.toGrpcBuilder(deletedBy));
         }
 

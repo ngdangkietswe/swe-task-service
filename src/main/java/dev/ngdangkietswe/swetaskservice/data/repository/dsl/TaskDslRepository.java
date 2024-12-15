@@ -6,9 +6,10 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import dev.ngdangkietswe.swejavacommonshared.domain.Page;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.Pageable;
-import dev.ngdangkietswe.sweprotobufshared.task.service.ListTaskReq;
+import dev.ngdangkietswe.sweprotobufshared.task.ListTaskReq;
 import dev.ngdangkietswe.swetaskservice.data.entity.QCdcAuthUserEntity;
 import dev.ngdangkietswe.swetaskservice.data.entity.QTaskEntity;
+import dev.ngdangkietswe.swetaskservice.data.projection.AuditProjection;
 import dev.ngdangkietswe.swetaskservice.data.projection.TaskProjection;
 import dev.ngdangkietswe.swetaskservice.data.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -34,17 +36,34 @@ public class TaskDslRepository {
 
     private final JPAQueryFactory factory;
     private final QTaskEntity qTask = QTaskEntity.taskEntity;
-    private final QCdcAuthUserEntity qCdcAuthUser = QCdcAuthUserEntity.cdcAuthUserEntity;
+    private final QCdcAuthUserEntity createdByUser = new QCdcAuthUserEntity("createdByUser");
+    private final QCdcAuthUserEntity updatedByUser = new QCdcAuthUserEntity("updatedByUser");
+    private final QCdcAuthUserEntity deletedByUser = new QCdcAuthUserEntity("deletedByUser");
+
+    @SuppressWarnings("unchecked")
+    public Optional<TaskProjection> findById(UUID id) {
+        JPAQuery<TaskProjection> query = (JPAQuery<TaskProjection>) factory.from(qTask)
+                .innerJoin(createdByUser).on(qTask.createdBy.eq(createdByUser.id))
+                .innerJoin(updatedByUser).on(qTask.updatedBy.eq(updatedByUser.id))
+                .leftJoin(deletedByUser).on(qTask.deletedBy.eq(deletedByUser.id))
+                .where(qTask.id.eq(id));
+
+        var expr = Projections.constructor(
+                TaskProjection.class,
+                qTask, Projections.constructor(
+                        AuditProjection.class,
+                        createdByUser, updatedByUser, deletedByUser
+                ));
+
+        return Optional.ofNullable(query.select(expr).fetchFirst());
+    }
 
     @SuppressWarnings("unchecked")
     public Page<TaskProjection> findAllByReq(ListTaskReq request, Pageable pageable) {
-        var modifiedBy = QCdcAuthUserEntity.cdcAuthUserEntity;
-        var deletedBy = QCdcAuthUserEntity.cdcAuthUserEntity;
-
         JPAQuery<TaskProjection> query = (JPAQuery<TaskProjection>) factory.from(qTask)
-                .innerJoin(qCdcAuthUser).on(qTask.createdBy.eq(qCdcAuthUser.id))
-                .innerJoin(modifiedBy).on(qTask.updatedBy.eq(modifiedBy.id))
-                .leftJoin(deletedBy).on(qTask.deletedBy.eq(deletedBy.id));
+                .innerJoin(createdByUser).on(qTask.createdBy.eq(createdByUser.id))
+                .innerJoin(updatedByUser).on(qTask.updatedBy.eq(updatedByUser.id))
+                .leftJoin(deletedByUser).on(qTask.deletedBy.eq(deletedByUser.id));
 
         if (StringUtils.isNotEmpty(request.getCreatedById())) {
             query.where(qTask.createdBy.eq(UUID.fromString(request.getCreatedById())));
@@ -69,7 +88,10 @@ public class TaskDslRepository {
 
         var expr = Projections.constructor(
                 TaskProjection.class,
-                qTask, qCdcAuthUser, modifiedBy, deletedBy);
+                qTask, Projections.constructor(
+                        AuditProjection.class,
+                        createdByUser, updatedByUser, deletedByUser
+                ));
 
         return PageUtils.paginate(
                 pageable,
