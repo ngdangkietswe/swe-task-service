@@ -3,6 +3,7 @@ package dev.ngdangkietswe.swetaskservice.grpc.mapper;
 import dev.ngdangkietswe.sweprotobufshared.proto.common.GrpcMapper;
 import dev.ngdangkietswe.sweprotobufshared.task.protobuf.Status;
 import dev.ngdangkietswe.sweprotobufshared.task.protobuf.Task;
+import dev.ngdangkietswe.swetaskservice.data.entity.TaskEntity;
 import dev.ngdangkietswe.swetaskservice.data.projection.TaskProjection;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

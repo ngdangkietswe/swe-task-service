@@ -50,7 +50,7 @@ public class CommentEntity extends BaseEntity {
 
     @OneToMany(
             mappedBy = "parent",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             targetEntity = CommentEntity.class)
     private List<CommentEntity> children;
 }
