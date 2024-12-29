@@ -1,5 +1,8 @@
 package dev.ngdangkietswe.swetaskservice.grpc.server;
 
+import dev.ngdangkietswe.swejavacommonshared.aspect.authorization.SecuredAction;
+import dev.ngdangkietswe.swejavacommonshared.aspect.authorization.SecuredAuth;
+import dev.ngdangkietswe.swejavacommonshared.aspect.authorization.SecuredResource;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.EmptyResp;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
@@ -28,6 +31,7 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
     private final ITaskGrpcService taskGrpcService;
 
     @Override
+    @SecuredAuth(action = SecuredAction.UPSERT, resource = SecuredResource.TASK, requestId = "id")
     public void upsertTask(UpsertTaskReq request, StreamObserver<UpsertResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -40,6 +44,7 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.READ, resource = SecuredResource.TASK)
     public void listTask(ListTaskReq request, StreamObserver<ListTaskResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -52,6 +57,7 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.READ, resource = SecuredResource.TASK)
     public void getTask(IdReq request, StreamObserver<GetTaskResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -64,6 +70,7 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.DELETE, resource = SecuredResource.TASK, requestId = "id")
     public void deleteTask(IdReq request, StreamObserver<EmptyResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -76,6 +83,7 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.UPDATE, resource = SecuredResource.TASK)
     public void markTaskAsInProgress(IdReq request, StreamObserver<EmptyResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -88,6 +96,7 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.UPDATE, resource = SecuredResource.TASK)
     public void markTaskAsInReview(IdReq request, StreamObserver<EmptyResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -100,6 +109,7 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.UPDATE, resource = SecuredResource.TASK)
     public void markTaskAsDone(IdReq request, StreamObserver<EmptyResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -112,6 +122,7 @@ public class TaskGrpcServer extends TaskServiceGrpc.TaskServiceImplBase {
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.UPDATE, resource = SecuredResource.TASK)
     public void markTaskAsCanceled(IdReq request, StreamObserver<EmptyResp> responseObserver) {
         IGrpcServer.execute(
                 request,
