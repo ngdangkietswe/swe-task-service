@@ -1,8 +1,8 @@
 package dev.ngdangkietswe.swetaskservice.grpc.server;
 
-import dev.ngdangkietswe.swejavacommonshared.aspect.authorization.SecuredAction;
-import dev.ngdangkietswe.swejavacommonshared.aspect.authorization.SecuredAuth;
-import dev.ngdangkietswe.swejavacommonshared.aspect.authorization.SecuredResource;
+import dev.ngdangkietswe.swejavacommonshared.aspects.authorization.SecuredAction;
+import dev.ngdangkietswe.swejavacommonshared.aspects.authorization.SecuredAuth;
+import dev.ngdangkietswe.swejavacommonshared.aspects.authorization.SecuredResource;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.EmptyResp;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;

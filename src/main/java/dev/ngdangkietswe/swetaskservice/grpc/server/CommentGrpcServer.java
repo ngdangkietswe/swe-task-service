@@ -1,5 +1,8 @@
 package dev.ngdangkietswe.swetaskservice.grpc.server;
 
+import dev.ngdangkietswe.swejavacommonshared.aspects.authorization.SecuredAction;
+import dev.ngdangkietswe.swejavacommonshared.aspects.authorization.SecuredAuth;
+import dev.ngdangkietswe.swejavacommonshared.aspects.authorization.SecuredResource;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.EmptyResp;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.IdReq;
 import dev.ngdangkietswe.sweprotobufshared.common.protobuf.UpsertResp;
@@ -27,6 +30,7 @@ public class CommentGrpcServer extends CommentServiceGrpc.CommentServiceImplBase
     private final ICommentGrpcService commentGrpcService;
 
     @Override
+    @SecuredAuth(action = SecuredAction.UPSERT, resource = SecuredResource.COMMENT, requestId = "id")
     public void upsertComment(UpsertCommentReq request, StreamObserver<UpsertResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -39,6 +43,7 @@ public class CommentGrpcServer extends CommentServiceGrpc.CommentServiceImplBase
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.READ, resource = SecuredResource.COMMENT)
     public void listComment(ListCommentReq request, StreamObserver<ListCommentResp> responseObserver) {
         IGrpcServer.execute(
                 request,
@@ -51,6 +56,7 @@ public class CommentGrpcServer extends CommentServiceGrpc.CommentServiceImplBase
     }
 
     @Override
+    @SecuredAuth(action = SecuredAction.DELETE, resource = SecuredResource.COMMENT)
     public void deleteComment(IdReq request, StreamObserver<EmptyResp> responseObserver) {
         IGrpcServer.execute(
                 request,
